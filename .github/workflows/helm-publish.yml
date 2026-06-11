@@ -8,16 +8,16 @@ on:
       - '!helm/clinic/values.yaml'
 
 env:
-  AWS_REGION: ca-central-1
-  ECR_REGISTRY: 316865756768.dkr.ecr.ca-central-1.amazonaws.com
   CHART_PATH: helm/clinic
+  REGISTRY: ghcr.io
+  REGISTRY_NAMESPACE: ghcr.io/${{ github.repository_owner }}
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
       contents: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v4
@@ -25,16 +25,12 @@ jobs:
       - name: Lint chart
         run: helm lint ${{ env.CHART_PATH }}
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::316865756768:role/liman-github-actions
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Login to ECR (Helm)
+      - name: Login to GHCR
         run: |
-          aws ecr get-login-password --region ${{ env.AWS_REGION }} | \
-            helm registry login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
+          echo "${{ secrets.GITHUB_TOKEN }}" | \
+            helm registry login ${{ env.REGISTRY }} \
+              --username ${{ github.actor }} \
+              --password-stdin
 
       - name: Read chart version
         id: chart
@@ -45,7 +41,7 @@ jobs:
       - name: Package chart
         run: helm package ${{ env.CHART_PATH }}
 
-      - name: Push chart to ECR
+      - name: Push chart to GHCR
         run: |
           helm push clinic-${{ steps.chart.outputs.version }}.tgz \
-            oci://${{ env.ECR_REGISTRY }}/helm_artifacts
+            oci://${{ env.REGISTRY_NAMESPACE }}

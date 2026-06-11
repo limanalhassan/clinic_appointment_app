@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: git@github.com:limanalhassan/clinic_appointment_app.git
-      targetRevision: master
-      path: helm/clinic
+    - repoURL: oci://ghcr.io/limanalhassan
+      chart: clinic
+      targetRevision: 0.1.5
       helm:
         valueFiles:
           - $values/argocd_application/values/clinic/values.yaml
