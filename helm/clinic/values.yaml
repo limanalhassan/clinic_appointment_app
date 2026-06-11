@@ -1,33 +1,30 @@
 image:
-  repository: 316865756768.dkr.ecr.ca-central-1.amazonaws.com/liman
-  tag: "2e46461"
-  pullPolicy: Always
+  repository: ""
+  tag: "latest"
+  pullPolicy: IfNotPresent
 
 namespace: clinic
 
 serviceAccount:
   name: clinic-app
 
-# Non-sensitive env vars — mounted as ConfigMap
 config:
   djangoSettingsModule: clinic.settings.production
   debug: "False"
-  allowedHosts: "appointment.limanalhassan.work"
+  allowedHosts: ""
   celeryBrokerUrl: "sqs://"
-  sqsQueueName: clinic-tasks
-  sqsQueueUrl: "https://sqs.ca-central-1.amazonaws.com/316865756768/clinic-tasks"
-  awsDefaultRegion: ca-central-1
-  defaultFromEmail: noreply@limanalhassan.work
-  emailBackend: django_ses.SESBackend
+  sqsQueueName: ""
+  sqsQueueUrl: ""
+  awsDefaultRegion: ""
+  defaultFromEmail: ""
+  emailBackend: django.core.mail.backends.console.EmailBackend
   smsBackend: console
 
-# Name of the Kubernetes Secret created outside the chart.
-# Must contain: SECRET_KEY, DATABASE_URL
 externalSecret:
   name: clinic-app-secret
 
 web:
-  replicas: 2
+  replicas: 1
   resources:
     requests:
       cpu: 250m
@@ -56,28 +53,20 @@ beat:
       memory: 256Mi
 
 hpa:
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 10
   cpuTargetPercent: 70
 
 keda:
-  queueUrl: "https://sqs.ca-central-1.amazonaws.com/316865756768/clinic-tasks"
-  awsRegion: ca-central-1
-  minReplicas: 1
+  queueUrl: ""
+  awsRegion: ""
+  minReplicas: 0
   maxReplicas: 10
   targetQueueLength: "10"
 
 ingress:
-  host: appointment.limanalhassan.work
+  host: ""
   ingressClassName: alb
-  annotations:
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
-    alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/backend-protocol: HTTP
-    alb.ingress.kubernetes.io/load-balancer-name: liman-app-alb
-    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=60
-    alb.ingress.kubernetes.io/healthcheck-path: /health/
-    alb.ingress.kubernetes.io/success-codes: "200-399"
+  annotations: {}
   path: /
   pathType: Prefix
