@@ -10,11 +10,12 @@ serviceAccount:
 
 # Non-sensitive env vars — mounted as ConfigMap
 config:
-  djangoSettingsModule: clinic.settings.base
+  djangoSettingsModule: clinic.settings.production
   debug: "False"
-  allowedHosts: "api.limanalhassan.work"
+  allowedHosts: "dev.limanalhassan.work"
   celeryBrokerUrl: "sqs://"
   sqsQueueName: clinic-tasks
+  sqsQueueUrl: "https://sqs.ca-central-1.amazonaws.com/316865756768/clinic-tasks"
   awsDefaultRegion: ca-central-1
   defaultFromEmail: noreply@limanalhassan.work
   emailBackend: django_ses.SESBackend
@@ -34,7 +35,7 @@ web:
     limits:
       cpu: 500m
       memory: 512Mi
-  healthPath: /api/
+  healthPath: /health/
 
 worker:
   resources:
@@ -60,7 +61,7 @@ hpa:
   cpuTargetPercent: 70
 
 keda:
-  queueUrl: ""  # set at deploy time: https://sqs.ca-central-1.amazonaws.com/<account>/clinic-tasks
+  queueUrl: "https://sqs.ca-central-1.amazonaws.com/316865756768/clinic-tasks"
   awsRegion: ca-central-1
   minReplicas: 0
   maxReplicas: 10
@@ -76,7 +77,7 @@ ingress:
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     alb.ingress.kubernetes.io/load-balancer-name: liman-app-alb
     alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=60
-    alb.ingress.kubernetes.io/healthcheck-path: /hello
+    alb.ingress.kubernetes.io/healthcheck-path: /health/
     alb.ingress.kubernetes.io/success-codes: "200-399"
   path: /
   pathType: Prefix

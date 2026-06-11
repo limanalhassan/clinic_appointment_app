@@ -7,4 +7,4 @@ metadata:
     {{- include "liman.labels" . | nindent 4 }}
 spec:
   podIdentity:
-    provider: aws-eks
+    provider: aws

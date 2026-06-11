@@ -45,6 +45,9 @@ spec:
             httpGet:
               path: {{ .Values.web.healthPath }}
               port: 8000
+              httpHeaders:
+                - name: Host
+                  value: {{ .Values.ingress.host }}
             initialDelaySeconds: 15
             periodSeconds: 10
             failureThreshold: 3
@@ -52,6 +55,9 @@ spec:
             httpGet:
               path: {{ .Values.web.healthPath }}
               port: 8000
+              httpHeaders:
+                - name: Host
+                  value: {{ .Values.ingress.host }}
             initialDelaySeconds: 30
             periodSeconds: 30
             failureThreshold: 3
