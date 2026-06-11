@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: liman
+  name: clinic-app
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: oci://316865756768.dkr.ecr.ca-central-1.amazonaws.com/helm_artifacts
     chart: liman
-    targetRevision: 0.1.0
+    targetRevision: 0.1.3
     helm:
       valueFiles:
         - values.yaml
