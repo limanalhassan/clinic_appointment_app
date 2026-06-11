@@ -40,7 +40,7 @@ resources:
 
 persistence:
   enabled: true
-  storageClassName: gp2
+  storageClassName: ebs-gp3
   size: 5Gi
   accessModes:
     - ReadWriteOnce
