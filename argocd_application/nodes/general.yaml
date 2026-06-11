@@ -36,10 +36,10 @@ spec:
           values: ["on-demand"]
         - key: eks.amazonaws.com/instance-category
           operator: In
-          values: ["c", "m", "r"]
+          values: ["t", "m", "r"]
         - key: eks.amazonaws.com/instance-generation
           operator: Gt
-          values: ["4"]
+          values: ["2"]
         - key: kubernetes.io/arch
           operator: In
           values: ["amd64"]
