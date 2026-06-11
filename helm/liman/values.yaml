@@ -1,7 +1,7 @@
 image:
-  repository: ""  # set to ECR URL at deploy time: <account>.dkr.ecr.ca-central-1.amazonaws.com/liman
+  repository: 316865756768.dkr.ecr.ca-central-1.amazonaws.com/liman
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 namespace: liman
 
