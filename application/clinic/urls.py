@@ -19,6 +19,7 @@ def health_check(request):
 
 
 urlpatterns = [
+    path('', include('django_prometheus.urls')),
     path('', RedirectView.as_view(url='/dashboard/', permanent=False)),
     path('health/', health_check),
     path('admin/', admin.site.urls),

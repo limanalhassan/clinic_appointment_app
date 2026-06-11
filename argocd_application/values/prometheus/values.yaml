@@ -23,6 +23,8 @@ prometheus:
     pathType: Prefix
 
   prometheusSpec:
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
     replicas: 1
     resources:
       requests:

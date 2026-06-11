@@ -30,6 +30,42 @@ admin:
   userKey: admin-user
   passwordKey: admin-password
 
+sidecar:
+  dashboards:
+    enabled: true
+    searchNamespace: ALL
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: default
+        orgId: 1
+        folder: Clinic
+        type: file
+        disableDeletion: false
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    node-exporter:
+      gnetId: 1860
+      revision: 37
+      datasource: Prometheus
+    kubernetes-pods:
+      gnetId: 6417
+      revision: 1
+      datasource: Prometheus
+    kube-state-metrics:
+      gnetId: 13332
+      revision: 12
+      datasource: Prometheus
+    django-prometheus:
+      gnetId: 17658
+      revision: 1
+      datasource: Prometheus
+
 resources:
   requests:
     cpu: 100m

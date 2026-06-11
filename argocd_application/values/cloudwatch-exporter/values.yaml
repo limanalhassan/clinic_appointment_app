@@ -1,0 +1,73 @@
+aws:
+  region: ca-central-1
+
+serviceAccount:
+  name: cloudwatch-exporter
+
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+
+config: |
+  region: ca-central-1
+  period_seconds: 60
+  metrics:
+    - aws_namespace: AWS/SQS
+      aws_metric_name: ApproximateNumberOfMessagesVisible
+      aws_dimensions: [QueueName]
+      aws_statistics: [Average, Maximum]
+
+    - aws_namespace: AWS/SQS
+      aws_metric_name: NumberOfMessagesSent
+      aws_dimensions: [QueueName]
+      aws_statistics: [Sum]
+
+    - aws_namespace: AWS/SQS
+      aws_metric_name: NumberOfMessagesDeleted
+      aws_dimensions: [QueueName]
+      aws_statistics: [Sum]
+
+    - aws_namespace: AWS/RDS
+      aws_metric_name: DatabaseConnections
+      aws_dimensions: [DBInstanceIdentifier]
+      aws_statistics: [Average, Maximum]
+
+    - aws_namespace: AWS/RDS
+      aws_metric_name: CPUUtilization
+      aws_dimensions: [DBInstanceIdentifier]
+      aws_statistics: [Average, Maximum]
+
+    - aws_namespace: AWS/RDS
+      aws_metric_name: FreeableMemory
+      aws_dimensions: [DBInstanceIdentifier]
+      aws_statistics: [Average, Minimum]
+
+    - aws_namespace: AWS/RDS
+      aws_metric_name: ReadLatency
+      aws_dimensions: [DBInstanceIdentifier]
+      aws_statistics: [Average, p95]
+
+    - aws_namespace: AWS/RDS
+      aws_metric_name: WriteLatency
+      aws_dimensions: [DBInstanceIdentifier]
+      aws_statistics: [Average, p95]
+
+    - aws_namespace: AWS/ApplicationELB
+      aws_metric_name: RequestCount
+      aws_dimensions: [LoadBalancer]
+      aws_statistics: [Sum]
+
+    - aws_namespace: AWS/ApplicationELB
+      aws_metric_name: TargetResponseTime
+      aws_dimensions: [LoadBalancer]
+      aws_statistics: [Average, p95, p99]
+
+    - aws_namespace: AWS/ApplicationELB
+      aws_metric_name: HTTPCode_Target_4XX_Count
+      aws_dimensions: [LoadBalancer]
+      aws_statistics: [Sum]
+
+    - aws_namespace: AWS/ApplicationELB
+      aws_metric_name: HTTPCode_Target_5XX_Count
+      aws_dimensions: [LoadBalancer]
+      aws_statistics: [Sum]

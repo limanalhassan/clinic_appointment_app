@@ -23,6 +23,12 @@
       "namespace": "argocd",
       "service_account": "ecr-token-refresher",
       "policy_file": "argocd.json"
+    },
+    "cloudwatch_exporter": {
+      "role_name": "liman-dev-cloudwatch-exporter",
+      "namespace": "monitoring",
+      "service_account": "cloudwatch-exporter",
+      "policy_file": "cloudwatch.json"
     }
   },
   "association_tags": {
@@ -41,6 +47,10 @@
     "ecr_token_refresher": {
       "Name": "liman-dev-ecr-token-refresher",
       "Component": "ArgoCD"
+    },
+    "cloudwatch_exporter": {
+      "Name": "liman-dev-cloudwatch-exporter",
+      "Component": "Monitoring"
     }
   }
 }
