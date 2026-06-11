@@ -11,7 +11,7 @@ serviceAccount:
 config:
   djangoSettingsModule: clinic.settings.production
   debug: "False"
-  allowedHosts: "appointment.limanalhassan.work"
+  allowedHosts: "*"
   celeryBrokerUrl: "sqs://"
   sqsQueueName: clinic-tasks
   sqsQueueUrl: "https://sqs.ca-central-1.amazonaws.com/316865756768/clinic-tasks"
