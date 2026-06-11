@@ -1,6 +1,6 @@
 image:
   repository: 316865756768.dkr.ecr.ca-central-1.amazonaws.com/liman
-  tag: "b8a0c23"
+  tag: "9f8216d"
   pullPolicy: Always
 
 namespace: clinic
