@@ -63,7 +63,7 @@ hpa:
 keda:
   queueUrl: "https://sqs.ca-central-1.amazonaws.com/316865756768/clinic-tasks"
   awsRegion: ca-central-1
-  minReplicas: 0
+  minReplicas: 1
   maxReplicas: 10
   targetQueueLength: "10"
 
