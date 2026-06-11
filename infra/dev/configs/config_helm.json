@@ -1,16 +1,5 @@
 {
   "releases": {
-    "keda": {
-      "name": "keda",
-      "repository": "https://kedacore.github.io/charts",
-      "chart": "keda",
-      "chart_version": "2.14.0",
-      "namespace": "keda",
-      "create_namespace": true,
-      "wait": true,
-      "timeout": 300,
-      "values_file": "keda.yaml"
-    },
     "argocd": {
       "name": "argocd",
       "repository": "https://argoproj.github.io/argo-helm",

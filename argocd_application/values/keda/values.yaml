@@ -1,0 +1,29 @@
+operator:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+metricsServer:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+webhooks:
+  replicaCount: 1
+
+serviceAccount:
+  operator:
+    create: true
+
+podSecurityContext:
+  runAsNonRoot: true
