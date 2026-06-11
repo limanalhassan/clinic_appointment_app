@@ -7,11 +7,23 @@
       "force_delete": false,
       "encryption_type": "AES256",
       "lifecycle_policy": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Keep last 10 images\",\"selection\":{\"tagStatus\":\"any\",\"countType\":\"imageCountMoreThan\",\"countNumber\":10},\"action\":{\"type\":\"expire\"}}]}"
+    },
+    "helm_artifacts": {
+      "name": "helm_artifacts/liman",
+      "image_tag_mutability": "IMMUTABLE",
+      "scan_on_push": false,
+      "force_delete": false,
+      "encryption_type": "AES256",
+      "lifecycle_policy": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Keep last 20 chart versions\",\"selection\":{\"tagStatus\":\"any\",\"countType\":\"imageCountMoreThan\",\"countNumber\":20},\"action\":{\"type\":\"expire\"}}]}"
     }
   },
   "repository_tags": {
     "liman": {
       "Name": "liman",
+      "Application": "Liman"
+    },
+    "helm_artifacts": {
+      "Name": "helm_artifacts/liman",
       "Application": "Liman"
     }
   }
