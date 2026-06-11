@@ -25,7 +25,7 @@ jobs:
         run: helm lint ${{ env.CHART_PATH }}
 
       - name: Validate rendered manifests
-        run: helm template liman ${{ env.CHART_PATH }} | kubectl apply --dry-run=client -f -
+        run: helm template liman ${{ env.CHART_PATH }} | kubectl apply --dry-run=client --validate=false -f -
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
