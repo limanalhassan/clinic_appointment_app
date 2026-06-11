@@ -29,6 +29,7 @@ spec:
             - clinic
             - beat
             - --loglevel=info
+            - --schedule=/tmp/celerybeat-schedule
           envFrom:
             - configMapRef:
                 name: {{ include "clinic.fullname" . }}-config

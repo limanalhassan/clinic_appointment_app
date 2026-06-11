@@ -18,6 +18,13 @@ WORKDIR /app
 COPY --from=builder /install /usr/local
 COPY --chown=app:app . .
 
+RUN SECRET_KEY=build-only \
+    DATABASE_URL=sqlite:////tmp/build.db \
+    CELERY_BROKER_URL=sqs:// \
+    SQS_QUEUE_NAME=build \
+    DJANGO_SETTINGS_MODULE=clinic.settings.base \
+    python manage.py collectstatic --noinput
+
 USER app
 
 EXPOSE 8000
