@@ -1,4 +1,5 @@
 import logging
+import os
 
 import boto3
 from django.conf import settings
@@ -28,6 +29,6 @@ def send_sms(phone, message):
     if getattr(settings, 'SMS_BACKEND', 'console') == 'console':
         logger.info("SMS to %s: %s", phone, message)
         return
-    client = boto3.client('sns', region_name=settings.AWS_DEFAULT_REGION)
+    client = boto3.client('sns', region_name=os.environ.get('AWS_DEFAULT_REGION', 'ca-central-1'))
     client.publish(PhoneNumber=phone, Message=message)
     logger.info("SMS dispatched via SNS to %s", phone)

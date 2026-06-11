@@ -4,7 +4,20 @@
       "name": "limanalhassan.work"
     }
   },
-  "email_identities": {},
+  "email_identities": {
+    "test": {
+      "name": "liman@linux.com"
+    },
+    "tests": {
+      "name": "limanalhassan25@gmail.com"
+    },
+    "testsi": {
+      "name": "Omotebi321@gmail.com"
+    },
+    "testsa": {
+      "name": "limanalhassan@yahoo.com"
+    }
+  },
   "configuration_sets": {
     "liman_transactional": {
       "name": "liman-transactional",
