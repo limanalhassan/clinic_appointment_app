@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "clinic.fullname" . }}-migrate-{{ .Release.Revision }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "clinic.labels" . | nindent 4 }}
+    app.kubernetes.io/component: migrate
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        {{- include "clinic.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: migrate
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - python
+            - manage.py
+            - migrate
+            - --no-input
+          envFrom:
+            - configMapRef:
+                name: {{ include "clinic.fullname" . }}-config
+            - secretRef:
+                name: {{ .Values.externalSecret.name }}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi

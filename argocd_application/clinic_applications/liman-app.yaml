@@ -8,13 +8,13 @@ spec:
   source:
     repoURL: git@github.com:limanalhassan/clinic_appointment_app.git
     targetRevision: master
-    path: helm/liman
+    path: helm/clinic
   destination:
     server: https://kubernetes.default.svc
-    namespace: liman
+    namespace: clinic
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=false
+      - CreateNamespace=true

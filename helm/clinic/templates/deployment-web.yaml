@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "clinic.fullname" . }}-web
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "clinic.labels" . | nindent 4 }}
+    app.kubernetes.io/component: web
+spec:
+  replicas: {{ .Values.web.replicas }}
+  selector:
+    matchLabels:
+      {{- include "clinic.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: web
+  template:
+    metadata:
+      labels:
+        {{- include "clinic.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: web
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+        - name: web
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - gunicorn
+            - clinic.wsgi:application
+            - --bind
+            - 0.0.0.0:8000
+            - --workers
+            - "4"
+            - --timeout
+            - "120"
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ include "clinic.fullname" . }}-config
+            - secretRef:
+                name: {{ .Values.externalSecret.name }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.web.healthPath }}
+              port: 8000
+              httpHeaders:
+                - name: Host
+                  value: {{ .Values.ingress.host }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.web.healthPath }}
+              port: 8000
+              httpHeaders:
+                - name: Host
+                  value: {{ .Values.ingress.host }}
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            failureThreshold: 3
+          resources:
+            {{- toYaml .Values.web.resources | nindent 12 }}

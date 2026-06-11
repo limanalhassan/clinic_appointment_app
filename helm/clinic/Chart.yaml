@@ -1,0 +1,6 @@
+apiVersion: v2
+name: clinic
+description: Clinic Appointment Reminder Service
+type: application
+version: 0.1.4
+appVersion: "latest"

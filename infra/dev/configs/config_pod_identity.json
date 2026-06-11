@@ -2,8 +2,8 @@
   "associations": {
     "app": {
       "role_name": "liman-dev-app",
-      "namespace": "liman",
-      "service_account": "liman-app",
+      "namespace": "clinic",
+      "service_account": "clinic-app",
       "policy_file": "app.json"
     },
     "keda": {

@@ -1,0 +1,10 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: {{ include "clinic.fullname" . }}-keda-auth
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "clinic.labels" . | nindent 4 }}
+spec:
+  podIdentity:
+    provider: aws

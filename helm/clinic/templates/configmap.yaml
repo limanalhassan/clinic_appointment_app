@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "clinic.fullname" . }}-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "clinic.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-2"
+    "helm.sh/hook-delete-policy": before-hook-creation
+data:
+  DJANGO_SETTINGS_MODULE: {{ .Values.config.djangoSettingsModule | quote }}
+  DEBUG: {{ .Values.config.debug | quote }}
+  ALLOWED_HOSTS: {{ .Values.config.allowedHosts | quote }}
+  CELERY_BROKER_URL: {{ .Values.config.celeryBrokerUrl | quote }}
+  SQS_QUEUE_NAME: {{ .Values.config.sqsQueueName | quote }}
+  SQS_QUEUE_URL: {{ .Values.config.sqsQueueUrl | quote }}
+  AWS_DEFAULT_REGION: {{ .Values.config.awsDefaultRegion | quote }}
+  DEFAULT_FROM_EMAIL: {{ .Values.config.defaultFromEmail | quote }}
+  EMAIL_BACKEND: {{ .Values.config.emailBackend | quote }}
+  SMS_BACKEND: {{ .Values.config.smsBackend | quote }}
