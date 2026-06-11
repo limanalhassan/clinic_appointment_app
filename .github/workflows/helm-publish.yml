@@ -16,7 +16,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -45,3 +45,13 @@ jobs:
         run: |
           helm push clinic-${{ steps.chart.outputs.version }}.tgz \
             oci://${{ env.REGISTRY_NAMESPACE }}
+
+      - name: Update targetRevision in ArgoCD app
+        run: |
+          sed -i "s/targetRevision: [0-9]*\.[0-9]*\.[0-9]*/targetRevision: ${{ steps.chart.outputs.version }}/" \
+            argocd_application/clinic_applications/clinic-app.yaml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add argocd_application/clinic_applications/clinic-app.yaml
+          git commit -m "ci: update clinic chart targetRevision to ${{ steps.chart.outputs.version }}"
+          git push
