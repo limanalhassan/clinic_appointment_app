@@ -1,0 +1,47 @@
+grafana:
+  enabled: false
+
+alertmanager:
+  enabled: false
+
+prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: alb
+    annotations:
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+      alb.ingress.kubernetes.io/ssl-redirect: "443"
+      alb.ingress.kubernetes.io/backend-protocol: HTTP
+      alb.ingress.kubernetes.io/load-balancer-name: liman-app-alb
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/success-codes: "200-399"
+    hosts:
+      - prometheus.limanalhassan.work
+    paths:
+      - /
+    pathType: Prefix
+
+  prometheusSpec:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+    retention: 7d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
+
+nodeExporter:
+  enabled: true
+
+kubeStateMetrics:
+  enabled: true

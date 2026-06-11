@@ -1,0 +1,45 @@
+replicas: 1
+
+ingress:
+  enabled: true
+  ingressClassName: alb
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/load-balancer-name: liman-app-alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/success-codes: "200-399"
+  hosts:
+    - grafana.limanalhassan.work
+  path: /
+  pathType: Prefix
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+        isDefault: true
+
+admin:
+  existingSecret: grafana-admin-credentials
+  userKey: admin-user
+  passwordKey: admin-password
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+persistence:
+  enabled: true
+  size: 5Gi
+  accessModes:
+    - ReadWriteOnce
