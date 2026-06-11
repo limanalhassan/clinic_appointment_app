@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ecr-token-refresher
+  namespace: argocd
+spec:
+  schedule: "0 */6 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: ecr-token-refresher
+          restartPolicy: OnFailure
+          containers:
+            - name: refresher
+              image: amazon/aws-cli:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  TOKEN=$(aws ecr get-login-password --region ca-central-1)
+                  kubectl patch secret ecr-helm-liman -n argocd \
+                    --type='json' \
+                    -p="[{\"op\":\"replace\",\"path\":\"/data/password\",\"value\":\"$(echo -n $TOKEN | base64 | tr -d '\n')\"}]"
+              env:
+                - name: AWS_DEFAULT_REGION
+                  value: ca-central-1

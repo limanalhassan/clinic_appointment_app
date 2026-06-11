@@ -11,6 +11,18 @@
       "namespace": "keda",
       "service_account": "keda-operator",
       "policy_file": "keda.json"
+    },
+    "argocd": {
+      "role_name": "liman-dev-argocd",
+      "namespace": "argocd",
+      "service_account": "argocd-server",
+      "policy_file": "argocd.json"
+    },
+    "ecr_token_refresher": {
+      "role_name": "liman-dev-ecr-token-refresher",
+      "namespace": "argocd",
+      "service_account": "ecr-token-refresher",
+      "policy_file": "argocd.json"
     }
   },
   "association_tags": {
@@ -21,6 +33,14 @@
     "keda": {
       "Name": "liman-dev-keda",
       "Component": "KEDA"
+    },
+    "argocd": {
+      "Name": "liman-dev-argocd",
+      "Component": "ArgoCD"
+    },
+    "ecr_token_refresher": {
+      "Name": "liman-dev-ecr-token-refresher",
+      "Component": "ArgoCD"
     }
   }
 }
