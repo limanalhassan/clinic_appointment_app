@@ -1,0 +1,37 @@
+{
+  "databases": {
+    "primary": {
+      "identifier": "liman-dev",
+      "engine": "postgres",
+      "engine_version": "18.3",
+      "instance_class": "db.t3.micro",
+      "allocated_storage": 20,
+      "max_allocated_storage": 100,
+      "storage_type": "gp3",
+      "db_name": "liman",
+      "port": 5432,
+      "create_db_subnet_group": true,
+      "subnet_keys": ["private1", "private2"],
+      "db_subnet_group_description": "Subnet group for Liman database",
+      "vpc_security_group_keys": ["db-sg"],
+      "backup_retention_period": 1,
+      "multi_az": false,
+      "publicly_accessible": false,
+      "deletion_protection": false,
+      "credentials_secret_name": "liman/dev/rds",
+      "skip_final_snapshot": true,
+      "copy_tags_to_snapshot": false,
+      "enable_performance_insights": false,
+      "enable_cloudwatch_logs_exports": [],
+      "create_parameter_group": false,
+      "parameter_group_family": "postgres18",
+      "parameter_group_description": ""
+    }
+  },
+  "database_tags": {
+    "primary": {
+      "Name": "liman-dev",
+      "Application": "Liman"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+    "env": "dev",
+    "region": "ca-central-1",
+    "client": "limansachi",
+    "profile": "terraform",
+    "tags": {
+        "Environment": "Development",
+        "Project": "Limansachi",
+        "ManagedBy": "Terraform",
+        "Owner": "Limansachi",
+        "env": "dev",
+        "product": "A"
+    }
+}

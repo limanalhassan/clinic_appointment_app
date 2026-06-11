@@ -1,0 +1,25 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "liman.fullname" . }}-worker
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "liman.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "liman.fullname" . }}-worker
+  pollingInterval: 30
+  cooldownPeriod: 300
+  minReplicaCount: {{ .Values.keda.minReplicas }}
+  maxReplicaCount: {{ .Values.keda.maxReplicas }}
+  triggers:
+    - type: aws-sqs-queue
+      authenticationRef:
+        name: {{ include "liman.fullname" . }}-keda-auth
+      metadata:
+        queueURL: {{ .Values.keda.queueUrl | quote }}
+        queueLength: {{ .Values.keda.targetQueueLength | quote }}
+        awsRegion: {{ .Values.keda.awsRegion | quote }}
+        identityOwner: operator

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "liman.fullname" . }}-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "liman.labels" . | nindent 4 }}
+data:
+  DJANGO_SETTINGS_MODULE: {{ .Values.config.djangoSettingsModule | quote }}
+  DEBUG: {{ .Values.config.debug | quote }}
+  ALLOWED_HOSTS: {{ .Values.config.allowedHosts | quote }}
+  CELERY_BROKER_URL: {{ .Values.config.celeryBrokerUrl | quote }}
+  SQS_QUEUE_NAME: {{ .Values.config.sqsQueueName | quote }}
+  AWS_DEFAULT_REGION: {{ .Values.config.awsDefaultRegion | quote }}
+  DEFAULT_FROM_EMAIL: {{ .Values.config.defaultFromEmail | quote }}
+  EMAIL_BACKEND: {{ .Values.config.emailBackend | quote }}
+  SMS_BACKEND: {{ .Values.config.smsBackend | quote }}

@@ -1,0 +1,20 @@
+{
+  "queues": {
+    "clinic_tasks": {
+      "name": "clinic-tasks",
+      "visibility_timeout_seconds": 300,
+      "message_retention_seconds": 86400,
+      "receive_wait_time_seconds": 20,
+      "delay_seconds": 0,
+      "fifo_queue": false,
+      "sqs_managed_sse_enabled": true
+    }
+  },
+  "queue_tags": {
+    "clinic_tasks": {
+      "Name": "clinic-tasks",
+      "Application": "Liman",
+      "Component": "CeleryBroker"
+    }
+  }
+}

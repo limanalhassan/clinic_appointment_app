@@ -1,0 +1,19 @@
+{
+    "Statement": [
+        {
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:PutObject",
+                "s3:PutObjectAcl",
+                "s3:GetObject"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "buckt_arn_here",
+                "buckt_arn_here/*"
+            ]
+        }
+    ],
+    "Version": "2012-10-17"
+}

@@ -1,0 +1,67 @@
+{
+    "vpcs": {
+      "main": {
+        "vpc_cidr": "10.5.0.0/16",
+        "vpc_name": "Main VPC",
+        "create_internet_gateway": true,
+        "create_nat_gateway": true,
+        "nat_gateway_subnet_key": "public1",
+        "subnets": {
+          "public1": {
+            "cidr_block": "10.5.1.0/24",
+            "availability_zone": "ca-central-1a",
+            "map_public_ip_on_launch": true
+          },
+          "public2": {
+            "cidr_block": "10.5.2.0/24",
+            "availability_zone": "ca-central-1b",
+            "map_public_ip_on_launch": true
+          },
+          "private1": {
+            "cidr_block": "10.5.10.0/24",
+            "availability_zone": "ca-central-1a",
+            "map_public_ip_on_launch": false
+          },
+          "private2": {
+            "cidr_block": "10.5.20.0/24",
+            "availability_zone": "ca-central-1b",
+            "map_public_ip_on_launch": false
+          }
+        },
+        "subnet_tags": {
+          "public1": {
+            "kubernetes.io/role/elb": "1",
+            "kubernetes.io/cluster/liman-dev": "shared"
+          },
+          "public2": {
+            "kubernetes.io/role/elb": "1",
+            "kubernetes.io/cluster/liman-dev": "shared"
+          },
+          "private1": {
+            "kubernetes.io/role/internal-elb": "1",
+            "kubernetes.io/cluster/liman-dev": "shared"
+          },
+          "private2": {
+            "kubernetes.io/role/internal-elb": "1",
+            "kubernetes.io/cluster/liman-dev": "shared"
+          }
+        },
+        "route_tables": {
+          "public": {
+            "routes": [{
+              "cidr_block": "0.0.0.0/0",
+              "use_internet_gateway": true
+            }],
+            "subnet_associations": ["public1","public2"]
+          },
+          "private": {
+            "routes": [{
+              "cidr_block": "0.0.0.0/0",
+              "use_nat_gateway": true
+            }],
+            "subnet_associations": ["private1","private2"]
+          }
+        }
+      }
+    }
+  }

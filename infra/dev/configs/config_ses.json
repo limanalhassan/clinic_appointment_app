@@ -1,0 +1,15 @@
+{
+  "domain_identities": {
+    "liman": {
+      "name": "limanalhassan.work"
+    }
+  },
+  "email_identities": {},
+  "configuration_sets": {
+    "liman_transactional": {
+      "name": "liman-transactional",
+      "reputation_metrics_enabled": true,
+      "sending_enabled": true
+    }
+  }
+}

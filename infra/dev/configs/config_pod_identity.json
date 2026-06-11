@@ -1,0 +1,26 @@
+{
+  "associations": {
+    "app": {
+      "role_name": "liman-dev-app",
+      "namespace": "liman",
+      "service_account": "liman-app",
+      "policy_file": "app.json"
+    },
+    "keda": {
+      "role_name": "liman-dev-keda",
+      "namespace": "keda",
+      "service_account": "keda-operator",
+      "policy_file": "keda.json"
+    }
+  },
+  "association_tags": {
+    "app": {
+      "Name": "liman-dev-app",
+      "Component": "Application"
+    },
+    "keda": {
+      "Name": "liman-dev-keda",
+      "Component": "KEDA"
+    }
+  }
+}

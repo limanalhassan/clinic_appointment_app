@@ -1,0 +1,18 @@
+{
+  "certificates": {
+    "liman": {
+      "domain_name": "limanalhassan.work",
+      "subject_alternative_names": [
+        "*.limanalhassan.work"
+      ],
+      "validation_method": "DNS",
+      "route53_hosted_zone_key": null
+    }
+  },
+  "certificate_tags": {
+    "liman": {
+      "Name": "liman-dev",
+      "Component": "ACM"
+    }
+  }
+}

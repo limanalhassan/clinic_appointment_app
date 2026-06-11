@@ -1,0 +1,13 @@
+{
+  "cluster": {
+    "name": "liman-dev",
+    "kubernetes_version": "1.33",
+    "endpoint_public_access": true,
+    "enable_cluster_creator_admin_permissions": true,
+    "compute_config": {
+      "enabled": true,
+      "node_pools": ["general-purpose"]
+    },
+    "subnet_keys": ["private1", "private2"]
+  }
+}

@@ -1,0 +1,42 @@
+{% extends "appointments/base.html" %}
+{% block title %}Patients — Liman{% endblock %}
+{% block page_title %}Patients{% endblock %}
+{% block nav_patients %}active{% endblock %}
+
+{% block content %}
+<div class="data-card">
+  <div class="data-card-header">
+    <h6>{{ patients.paginator.count }} patient{{ patients.paginator.count|pluralize }}</h6>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Date of Birth</th>
+          <th>Registered</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for patient in patients %}
+        <tr>
+          <td class="fw-500">{{ patient.user.get_full_name|default:patient.user.username }}</td>
+          <td class="text-muted">{{ patient.user.username }}</td>
+          <td>{{ patient.user.email|default:"—" }}</td>
+          <td>{{ patient.phone }}</td>
+          <td>{{ patient.date_of_birth|date:"M d, Y"|default:"—" }}</td>
+          <td class="text-muted" style="font-size:0.8rem;">{{ patient.created_at|date:"M d, Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center text-muted py-4" style="font-size:0.875rem;">No patients registered yet.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

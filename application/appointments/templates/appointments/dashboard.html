@@ -1,0 +1,109 @@
+{% extends "appointments/base.html" %}
+{% block title %}Dashboard — Liman{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block content %}
+<div class="row g-3 mb-4">
+  {% if request.user.is_staff %}
+  <div class="col-sm-6 col-xl-3">
+    <div class="stat-card">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="stat-icon" style="background:#eff6ff;">
+          <i class="bi bi-people-fill" style="color:#1d4ed8;"></i>
+        </div>
+      </div>
+      <div class="stat-value">{{ total_patients }}</div>
+      <div class="stat-label">Total Patients</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="stat-card">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="stat-icon" style="background:#f0fdf4;">
+          <i class="bi bi-person-badge-fill" style="color:#15803d;"></i>
+        </div>
+      </div>
+      <div class="stat-value">{{ total_doctors }}</div>
+      <div class="stat-label">Total Doctors</div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="{% if request.user.is_staff %}col-sm-6 col-xl-3{% else %}col-4{% endif %}">
+    <div class="stat-card">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div class="stat-icon" style="background:#f0f9ff;">
+          <i class="bi bi-calendar2-check-fill" style="color:#0891b2;"></i>
+        </div>
+      </div>
+      <div class="stat-value">{{ scheduled_count }}</div>
+      <div class="stat-label">Scheduled</div>
+    </div>
+  </div>
+  <div class="{% if request.user.is_staff %}col-sm-6 col-xl-3{% else %}col-4{% endif %}">
+    <div class="stat-card">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div class="stat-icon" style="background:#f0fdf4;">
+          <i class="bi bi-patch-check-fill" style="color:#15803d;"></i>
+        </div>
+      </div>
+      <div class="stat-value">{{ completed_count }}</div>
+      <div class="stat-label">Confirmed</div>
+    </div>
+  </div>
+  <div class="{% if request.user.is_staff %}col-sm-6 col-xl-3{% else %}col-4{% endif %}">
+    <div class="stat-card">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div class="stat-icon" style="background:#fefce8;">
+          <i class="bi bi-bell-fill" style="color:#a16207;"></i>
+        </div>
+      </div>
+      <div class="stat-value">{{ reminders_sent }}</div>
+      <div class="stat-label">Reminders Sent</div>
+    </div>
+  </div>
+</div>
+
+<div class="data-card">
+  <div class="data-card-header">
+    <h6>Upcoming Appointments <span class="text-muted fw-normal" style="font-size:0.78rem;">(next 7 days)</span></h6>
+    <a href="{% url 'appointment-list-html' %}" class="btn btn-sm" style="background:#f1f5f9;color:#0f172a;font-size:0.78rem;border-radius:6px;">View all</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Patient</th>
+          <th>Doctor</th>
+          <th>Date &amp; Time</th>
+          <th>Status</th>
+          <th>Reminder</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appt in upcoming_appointments %}
+        <tr>
+          <td>{{ appt.patient }}</td>
+          <td>{{ appt.doctor }}</td>
+          <td>{{ appt.scheduled_at|date:"M d, Y" }} <span class="text-muted">{{ appt.scheduled_at|date:"H:i" }}</span></td>
+          <td>
+            <span class="status-badge badge-{{ appt.status }}">{{ appt.get_status_display }}</span>
+          </td>
+          <td>
+            {% if appt.any_reminder_sent %}
+              <i class="bi bi-check-circle-fill" style="color:#15803d;"></i>
+            {% else %}
+              <i class="bi bi-clock" style="color:#94a3b8;"></i>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="text-center text-muted py-4" style="font-size:0.875rem;">No upcoming appointments in the next 7 days.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

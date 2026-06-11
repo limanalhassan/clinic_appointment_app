@@ -1,0 +1,23 @@
+from .base import *
+
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    'region': env('AWS_DEFAULT_REGION'),
+    'predefined_queues': {
+        env('SQS_QUEUE_NAME'): {
+            'url': env('SQS_QUEUE_URL'),
+        },
+    },
+}
+
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_SES_REGION_NAME = env('AWS_DEFAULT_REGION')
+AWS_SES_REGION_ENDPOINT = f"email.{env('AWS_DEFAULT_REGION')}.amazonaws.com"
+SMS_BACKEND = 'sns'

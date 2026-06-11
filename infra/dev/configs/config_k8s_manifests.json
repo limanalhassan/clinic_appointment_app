@@ -1,0 +1,9 @@
+{
+  "manifests": {
+    "ingressclass": {
+      "template_file": "ingressclass.yaml",
+      "field_manager": "terraform",
+      "force_conflicts": false
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "security_groups": {
+    "db-sg": {
+      "name": "liman-dev-rds",
+      "description": "Allow PostgreSQL access from within the VPC",
+      "vpc_key": "main",
+      "ingress_rules": [
+        {
+          "description": "PostgreSQL from VPC",
+          "from_port": 5432,
+          "to_port": 5432,
+          "protocol": "tcp",
+          "cidr_blocks": ["10.5.0.0/16"]
+        }
+      ],
+      "egress_rules": [
+        {
+          "description": "Allow all outbound",
+          "from_port": 0,
+          "to_port": 0,
+          "protocol": "-1",
+          "cidr_blocks": ["0.0.0.0/0"]
+        }
+      ]
+    }
+  }
+}

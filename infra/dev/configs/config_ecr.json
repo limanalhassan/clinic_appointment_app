@@ -1,0 +1,18 @@
+{
+  "repositories": {
+    "liman": {
+      "name": "liman",
+      "image_tag_mutability": "IMMUTABLE",
+      "scan_on_push": true,
+      "force_delete": false,
+      "encryption_type": "AES256",
+      "lifecycle_policy": "{\"rules\":[{\"rulePriority\":1,\"description\":\"Keep last 10 images\",\"selection\":{\"tagStatus\":\"any\",\"countType\":\"imageCountMoreThan\",\"countNumber\":10},\"action\":{\"type\":\"expire\"}}]}"
+    }
+  },
+  "repository_tags": {
+    "liman": {
+      "Name": "liman",
+      "Application": "Liman"
+    }
+  }
+}

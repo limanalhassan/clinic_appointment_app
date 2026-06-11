@@ -1,0 +1,42 @@
+{% extends "appointments/base.html" %}
+{% block title %}Doctors — Liman{% endblock %}
+{% block page_title %}Doctors{% endblock %}
+{% block nav_doctors %}active{% endblock %}
+
+{% block content %}
+<div class="data-card">
+  <div class="data-card-header">
+    <h6>{{ doctors.paginator.count }} doctor{{ doctors.paginator.count|pluralize }}</h6>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Specialty</th>
+          <th>Email</th>
+          <th>Bio</th>
+          <th>Joined</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for doctor in doctors %}
+        <tr>
+          <td class="fw-500">{{ doctor }}</td>
+          <td>
+            <span class="status-badge" style="background:#f0f9ff;color:#0891b2;">{{ doctor.specialty }}</span>
+          </td>
+          <td>{{ doctor.user.email|default:"—" }}</td>
+          <td class="text-muted" style="font-size:0.82rem;">{{ doctor.bio|default:"—"|truncatechars:60 }}</td>
+          <td class="text-muted" style="font-size:0.8rem;">{{ doctor.created_at|date:"M d, Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="text-center text-muted py-4" style="font-size:0.875rem;">No doctors registered yet.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
