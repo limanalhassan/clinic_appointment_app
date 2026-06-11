@@ -40,6 +40,10 @@ locals {
     { domain_identities = {}, email_identities = {}, configuration_sets = {} },
     try(jsondecode(file("${var.config_root}/configs/config_ses.json")), {})
   )
+  config_github_oidc = merge(
+    { providers = {}, provider_tags = {}, roles = {}, role_tags = {} },
+    try(jsondecode(file("${var.config_root}/configs/config_github_oidc.json")), {})
+  )
 }
 
 ################################################
@@ -193,4 +197,30 @@ module "pod_identity" {
   association_tags = local.config_pod_identity.association_tags
 
   depends_on = [module.eks]
+}
+
+################################################
+#           GitHub OIDC Module                 #
+################################################
+
+locals {
+  github_oidc_roles = {
+    for k, v in local.config_github_oidc.roles : k => {
+      role_name     = v.role_name
+      provider_key  = v.provider_key
+      subject       = v.subject
+      audience      = lookup(v, "audience", "sts.amazonaws.com")
+      inline_policy = lookup(v, "policy_file", null) != null ? file("${var.config_root}/../templates/policies/inline_policies/${v.policy_file}") : lookup(v, "inline_policy", null)
+    }
+  }
+}
+
+module "github_oidc" {
+  source = "../../modules/aws_github_oidc"
+
+  oidc_providers = local.config_github_oidc.providers
+  provider_tags = local.config_github_oidc.provider_tags
+  roles         = local.github_oidc_roles
+  role_tags     = local.config_github_oidc.role_tags
+  tags          = local.config.tags
 }

@@ -1,7 +1,7 @@
 apiVersion: eks.amazonaws.com/v1
 kind: IngressClassParams
 metadata:
-  name: alb
+  name: albN
 spec:
   scheme: internet-facing
   group:
@@ -14,7 +14,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: IngressClass
 metadata:
-  name: alb
+  name: albN
   annotations:
     ingressclass.kubernetes.io/is-default-class: "true"
 spec:
@@ -22,4 +22,4 @@ spec:
   parameters:
     apiGroup: eks.amazonaws.com
     kind: IngressClassParams
-    name: alb
+    name: albN
