@@ -1,7 +1,5 @@
 # Clinic Appointment Reminder Service
 
-A take-home assessment for the Jane Cloud Engineer (Shipyard team) role.
-
 ---
 
 ## 1. Application Overview
