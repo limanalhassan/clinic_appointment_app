@@ -58,7 +58,6 @@ charts/
 .DS_Store
 CLAUDE.md
 .claude/
-images/
 
 # pytest
 .pytest_cache/
