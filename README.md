@@ -47,6 +47,14 @@ If the web tier goes down, staff cannot book or modify appointments. If the work
 
 ![Doctor Booking Notification](images/doctor_message.png)
 
+**Patient reminder inbox — 30 minute, 2 hour, and next-day reminders all delivered**
+
+![Patient Appointment Reminders](images/patient_appt_reminder.png)
+
+**Doctor reminder inbox — all three reminder windows received**
+
+![Doctor Appointment Reminders](images/doctor_appt_reminder.png)
+
 **Key health metrics**
 
 - HTTP 5xx rate on the web tier
