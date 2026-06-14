@@ -1,7 +1,7 @@
 variable "manifests" {
   description = "Map of Kubernetes manifests to apply. Each value must contain a decoded manifest map (use yamldecode in the caller)."
-  type    = any
-  default = {}
+  type        = any
+  default     = {}
 }
 
 variable "labels" {

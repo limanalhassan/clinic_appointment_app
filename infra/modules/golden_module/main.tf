@@ -1,5 +1,5 @@
 locals {
-  config     = jsondecode(file("${var.config_root}/configs/config.json"))
+  config = jsondecode(file("${var.config_root}/configs/config.json"))
   config_vpc = merge(
     { vpcs = {} },
     try(jsondecode(file("${var.config_root}/configs/config_vpc.json")), {})
@@ -219,8 +219,8 @@ module "github_oidc" {
   source = "../../modules/aws_github_oidc"
 
   oidc_providers = local.config_github_oidc.providers
-  provider_tags = local.config_github_oidc.provider_tags
-  roles         = local.github_oidc_roles
-  role_tags     = local.config_github_oidc.role_tags
-  tags          = local.config.tags
+  provider_tags  = local.config_github_oidc.provider_tags
+  roles          = local.github_oidc_roles
+  role_tags      = local.config_github_oidc.role_tags
+  tags           = local.config.tags
 }

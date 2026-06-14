@@ -10,17 +10,17 @@ locals {
   # Supports both file references (*_file) and direct JSON strings
   processed_roles = {
     for role_key, role in var.roles : role_key => {
-      name                 = role.name
-      description          = role.description
-      assume_role_policy   = try(
+      name        = role.name
+      description = role.description
+      assume_role_policy = try(
         file("${path.module}/assume-role/${role.assume_role_policy_file}"),
         try(role.assume_role_policy, null)
       )
-      id                   = role.id
+      id                      = role.id
       create_instance_profile = role.create_instance_profile
       inline_policies = {
         for policy_key, policy in coalesce(role.inline_policies, {}) : policy_key => {
-          name   = policy.name
+          name = policy.name
           policy = try(
             var.env != "" ? templatefile("${path.module}/policies/${policy.policy_file}", { env = var.env }) : file("${path.module}/policies/${policy.policy_file}"),
             try(policy.policy, null)

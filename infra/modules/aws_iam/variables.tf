@@ -3,13 +3,13 @@ variable "roles" {
   type = map(object({
     name                    = string
     description             = optional(string)
-    assume_role_policy      = optional(string) # Direct JSON string
-    assume_role_policy_file = optional(string) # File name in assume-role/ folder (takes precedence)
-    id                      = optional(string) # If provided, imports existing role by name instead of creating new one
+    assume_role_policy      = optional(string)      # Direct JSON string
+    assume_role_policy_file = optional(string)      # File name in assume-role/ folder (takes precedence)
+    id                      = optional(string)      # If provided, imports existing role by name instead of creating new one
     create_instance_profile = optional(bool, false) # Create instance profile with same name as role
     inline_policies = optional(map(object({
-      name      = string
-      policy    = optional(string) # Direct JSON string
+      name        = string
+      policy      = optional(string) # Direct JSON string
       policy_file = optional(string) # File name in policies/ folder (takes precedence)
     })), {})
     managed_policy_arns = optional(list(string), []) # List of AWS managed policy ARNs to attach

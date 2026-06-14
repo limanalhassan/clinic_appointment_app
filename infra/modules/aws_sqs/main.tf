@@ -15,13 +15,13 @@ resource "aws_sqs_queue" "this" {
 
   fifo_queue = each.value.fifo_queue
 
-  policy = each.value.policy
-  redrive_policy = each.value.redrive_policy
+  policy               = each.value.policy
+  redrive_policy       = each.value.redrive_policy
   redrive_allow_policy = each.value.redrive_allow_policy
 
   kms_master_key_id                 = each.value.kms_master_key_id
   kms_data_key_reuse_period_seconds = each.value.kms_data_key_reuse_period_seconds
-  sqs_managed_sse_enabled          = each.value.sqs_managed_sse_enabled
+  sqs_managed_sse_enabled           = each.value.sqs_managed_sse_enabled
 
   tags = merge(local.common_tags, lookup(var.queue_tags, each.key, {}))
 }

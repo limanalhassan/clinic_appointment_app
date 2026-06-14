@@ -5,7 +5,7 @@ locals {
   resolved_hosted_zone_ids = {
     for cert_key, cert in var.certificates : cert_key => (
       cert.route53_hosted_zone_key != null && contains(keys(var.vpc_route53_hosted_zone_ids), cert.route53_hosted_zone_key) ?
-        var.vpc_route53_hosted_zone_ids[cert.route53_hosted_zone_key] : null
+      var.vpc_route53_hosted_zone_ids[cert.route53_hosted_zone_key] : null
     )
   }
 }
@@ -23,7 +23,7 @@ resource "aws_acm_certificate" "this" {
     for_each = each.value.validation_option
     content {
       domain_name       = validation_option.value.domain_name
-      validation_domain  = validation_option.value.validation_domain
+      validation_domain = validation_option.value.validation_domain
     }
   }
 
@@ -58,12 +58,12 @@ resource "aws_route53_record" "certificate_validation" {
     for pair in flatten([
       for cert_key, cert in var.certificates : [
         for dvo in aws_acm_certificate.this[cert_key].domain_validation_options : {
-          key           = "${cert_key}-${dvo.domain_name}"
-          cert_key      = cert_key
-          domain_name   = dvo.domain_name
-          record_name   = dvo.resource_record_name
-          record_type   = dvo.resource_record_type
-          record_value  = dvo.resource_record_value
+          key            = "${cert_key}-${dvo.domain_name}"
+          cert_key       = cert_key
+          domain_name    = dvo.domain_name
+          record_name    = dvo.resource_record_name
+          record_type    = dvo.resource_record_type
+          record_value   = dvo.resource_record_value
           hosted_zone_id = local.resolved_hosted_zone_ids[cert_key]
         }
       ] if cert.validation_method == "DNS" && local.resolved_hosted_zone_ids[cert_key] != null

@@ -1,9 +1,9 @@
 variable "certificates" {
   description = "Map of ACM certificates to create. Each key is a unique identifier, value contains certificate configuration."
   type = map(object({
-    domain_name               = string                    # Primary domain name (e.g., example.com)
+    domain_name               = string                     # Primary domain name (e.g., example.com)
     subject_alternative_names = optional(list(string), []) # Additional domain names (SANs)
-    validation_method         = string                    # DNS or EMAIL
+    validation_method         = string                     # DNS or EMAIL
     validation_option = optional(list(object({
       domain_name       = string # Domain name to validate (must be in domain_name or subject_alternative_names)
       validation_domain = string # Domain to use for validation (e.g., _example.com)

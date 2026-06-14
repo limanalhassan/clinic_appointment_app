@@ -4,9 +4,9 @@ variable "queues" {
     name = string
 
     delay_seconds              = optional(number, 0)
-    max_message_size           = optional(number, 262144)   # 256 KiB
-    message_retention_seconds  = optional(number, 345600)   # 4 days
-    receive_wait_time_seconds  = optional(number, 0)       # Short polling; 1-20 for long polling
+    max_message_size           = optional(number, 262144) # 256 KiB
+    message_retention_seconds  = optional(number, 345600) # 4 days
+    receive_wait_time_seconds  = optional(number, 0)      # Short polling; 1-20 for long polling
     visibility_timeout_seconds = optional(number, 30)
 
     # FIFO
@@ -16,11 +16,11 @@ variable "queues" {
     policy = optional(string)
 
     # Redrive
-    redrive_policy = optional(string)  # JSON: {"deadLetterTargetArn":"...", "maxReceiveCount":"5"}
+    redrive_policy       = optional(string) # JSON: {"deadLetterTargetArn":"...", "maxReceiveCount":"5"}
     redrive_allow_policy = optional(string)
 
     # KMS
-    kms_master_key_id            = optional(string)
+    kms_master_key_id                 = optional(string)
     kms_data_key_reuse_period_seconds = optional(number)
 
     # Server-side encryption

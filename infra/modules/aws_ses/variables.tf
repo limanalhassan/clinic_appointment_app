@@ -17,7 +17,7 @@ variable "domain_identities" {
 variable "configuration_sets" {
   description = "Map of SES configuration sets to create. Each key is a unique identifier."
   type = map(object({
-    name = string
+    name                       = string
     reputation_metrics_enabled = optional(bool, false)
     sending_enabled            = optional(bool, true)
     # Optional: event_destination blocks (separate resource in AWS)

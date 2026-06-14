@@ -20,7 +20,7 @@ resource "aws_ses_email_identity" "this" {
 resource "aws_ses_configuration_set" "this" {
   for_each = var.configuration_sets
 
-  name = each.value.name
+  name                       = each.value.name
   reputation_metrics_enabled = each.value.reputation_metrics_enabled
   sending_enabled            = each.value.sending_enabled
 }

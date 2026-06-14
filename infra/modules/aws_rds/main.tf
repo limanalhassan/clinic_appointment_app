@@ -34,8 +34,8 @@ resource "aws_db_subnet_group" "this" {
 resource "aws_db_parameter_group" "this" {
   for_each = { for k, v in var.databases : k => v if v.create_parameter_group }
 
-  name   = each.value.identifier
-  family = each.value.parameter_group_family
+  name        = each.value.identifier
+  family      = each.value.parameter_group_family
   description = each.value.parameter_group_description != "" ? each.value.parameter_group_description : "Parameter group for ${each.value.identifier}"
 
   tags = merge(var.tags, lookup(var.database_tags, each.key, {}))

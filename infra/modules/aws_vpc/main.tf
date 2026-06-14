@@ -94,12 +94,12 @@ resource "aws_subnet" "this" {
     ]) : pair.key => pair
   }
 
-  vpc_id                  = aws_vpc.this[each.value.vpc_key].id
-  cidr_block              = each.value.subnet.cidr_block
-  availability_zone       = each.value.subnet.availability_zone
-  map_public_ip_on_launch = each.value.subnet.map_public_ip_on_launch
+  vpc_id                          = aws_vpc.this[each.value.vpc_key].id
+  cidr_block                      = each.value.subnet.cidr_block
+  availability_zone               = each.value.subnet.availability_zone
+  map_public_ip_on_launch         = each.value.subnet.map_public_ip_on_launch
   assign_ipv6_address_on_creation = each.value.subnet.assign_ipv6_address_on_creation
-  ipv6_cidr_block         = each.value.subnet.ipv6_cidr_block
+  ipv6_cidr_block                 = each.value.subnet.ipv6_cidr_block
 
   tags = merge(
     local.common_tags,
@@ -143,10 +143,10 @@ resource "aws_route" "ipv4" {
       for vpc_key, vpc in var.vpcs : [
         for rt_key, rt in coalesce(vpc.route_tables, {}) : [
           for route_idx, route in coalesce(rt.routes, []) : {
-            key      = "${vpc_key}-${rt_key}-route-${route_idx}-ipv4"
-            vpc_key  = vpc_key
-            rt_key   = rt_key
-            config   = route
+            key     = "${vpc_key}-${rt_key}-route-${route_idx}-ipv4"
+            vpc_key = vpc_key
+            rt_key  = rt_key
+            config  = route
           }
         ]
       ]
@@ -189,12 +189,12 @@ resource "aws_route" "ipv6" {
   route_table_id = aws_route_table.this["${each.value.vpc_key}-${each.value.rt_key}"].id
 
   destination_ipv6_cidr_block = each.value.config.ipv6_cidr_block
-  egress_only_gateway_id     = each.value.config.egress_only_gateway_id
-  transit_gateway_id         = each.value.config.transit_gateway_id
-  vpc_endpoint_id            = each.value.config.vpc_endpoint_id
+  egress_only_gateway_id      = each.value.config.egress_only_gateway_id
+  transit_gateway_id          = each.value.config.transit_gateway_id
+  vpc_endpoint_id             = each.value.config.vpc_endpoint_id
   network_interface_id        = each.value.config.network_interface_id
-  carrier_gateway_id         = each.value.config.carrier_gateway_id
-  local_gateway_id           = each.value.config.local_gateway_id
+  carrier_gateway_id          = each.value.config.carrier_gateway_id
+  local_gateway_id            = each.value.config.local_gateway_id
   vpc_peering_connection_id   = each.value.config.vpc_peering_connection_id
 }
 
@@ -205,9 +205,9 @@ resource "aws_route_table_association" "this" {
       for vpc_key, vpc in var.vpcs : [
         for rt_key, rt in coalesce(vpc.route_tables, {}) : [
           for subnet_key in coalesce(rt.subnet_associations, []) : {
-            key      = "${vpc_key}-${rt_key}-${subnet_key}"
-            vpc_key  = vpc_key
-            rt_key   = rt_key
+            key        = "${vpc_key}-${rt_key}-${subnet_key}"
+            vpc_key    = vpc_key
+            rt_key     = rt_key
             subnet_key = subnet_key
           }
         ]
